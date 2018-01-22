@@ -4,6 +4,12 @@ import './index.css';
 // 1. Initialize
 const app = dva();
 
+app.model(require("./models/listMessage"));
+
+app.model(require("./models/detailMessage"));
+
+app.model(require("./models/newMessage"));
+
 // 2. Plugins
 // app.use({});
 
