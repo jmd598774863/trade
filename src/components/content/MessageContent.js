@@ -13,7 +13,7 @@ function MessageContent() {
           <InputGroup size="large">
             <Col span={4}><Input addonBefore='主题：' className={st.cl_red}/></Col>
             <Col span={4}><DatePicker placeholder='日期：'  className={st.cl_red}/></Col>
-            <Col span={16} className={st.ta_right}><Button type="primary">查询2</Button></Col>
+            <Col span={16} className={st.ta_right}><Button type="primary">查询</Button></Col>
           </InputGroup>
         </Row>
       </Content>
