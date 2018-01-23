@@ -10,7 +10,7 @@ function MessageHeader({text, path, back}) {
     <div className={styles.normal}>
       {
         back ? (
-          <Header className={st.ta_center+b+st.cl_white+b+st.bg_grey4+b+st.pd_l_2} style={{fontSize:18}}>
+          <Header className={st.ta_center+b+st.cl_white+b+st.bg_grey4+b+st.pd_l_2} style={{fontSize:16}}>
             <Row>
               <Col span={1}>
                 <Link to={path}>
@@ -21,7 +21,7 @@ function MessageHeader({text, path, back}) {
             </Row>
           </Header>
         ):(
-          <Header className={st.ta_center+b+st.cl_white+b+st.bg_grey4} style={{fontSize:18}}>
+          <Header className={st.ta_center+b+st.cl_white+b+st.bg_grey4} style={{fontSize:16}}>
             {text}
           </Header>
         )

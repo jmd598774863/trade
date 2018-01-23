@@ -4,6 +4,9 @@
 .cl_blue2{
     color:rgb(8,121,200)
 }
+.cl_blue3{
+    color:rgb(135,208,248)
+}
 .cl_white{
     color:white
 }
@@ -210,6 +213,9 @@
 .mg_0{
     margin:0px
 }
+.mg_1{
+    margin:1px
+}
 .mg_5{
     margin:5px
 }
@@ -227,6 +233,9 @@
 }
 .mg_t_10{
     margin-top:10px
+}
+.mg_l_5{
+    margin-left:5px
 }
 .mg_b_10{
     margin-bottom:10px
@@ -690,6 +699,9 @@
 }
 .bd_b_s{
     border-bottom-style:solid
+}
+.bd_l_s{
+    border-left-style:solid
 }
 .fl_lt{
     float:left
