@@ -7,7 +7,7 @@ const b = ' ';
 const { Header } = Layout;
 function MessageHeader({text, path, back}) {
   return (
-    <div className={styles.normal}>
+    <div className={styles.normal+b+st.pt_fixed+b+st.tp_0+b+st.wd_full+b+st.zi_1}>
       {
         back ? (
           <Header className={st.ta_center+b+st.cl_white+b+st.bg_grey4+b+st.pd_l_2} style={{fontSize:16}}>
