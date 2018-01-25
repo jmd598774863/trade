@@ -2,12 +2,18 @@ import React from 'react';
 import styles from './MessageContent.css';
 import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon  } from 'antd';
 import st from '../../css/simple.css';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
-function MessageContent() {
+function MessageContent({dispatch}) {
   function checkAll(){
 
+  }
+  function toDetail(){
+    console.log(3);
+    dispatch(routerRedux.push('/detailMessage'));
   }
   return (
     <div className={styles.normal}>
@@ -31,12 +37,12 @@ function MessageContent() {
         <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_5+b+st.cl_blue3}>
           上周（4）
         </Row>
-        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_10}>
-            <Col span={1}><Checkbox onChange={checkAll}/></Col>
-            <Col span={4}>张三</Col>
-            <Col span={16}>由于1号楼电力系统存在问题故障问题</Col>
-            <Col span={2}>12月25日</Col>
-            <Col span={1} className={st.ta_center}><Icon type='right'/></Col>
+        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
+            <Col span={1}><div className={st.pd_10}><Checkbox onChange={checkAll}/></div></Col>
+            <Col span={4}><div className={st.pd_10}>张三</div></Col>
+            <Col span={16}><div className={st.pd_10}>由于1号楼电力系统存在问题故障问题</div></Col>
+            <Col span={2}><div className={st.pd_10}>12月25日</div></Col>
+            <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
         </Row>
       </Content>
       <div className={st.hg_50+b+st.bg_white}/>
@@ -44,4 +50,8 @@ function MessageContent() {
   );
 }
 
-export default MessageContent;
+function mapStateToProps(state) {
+  return {
+  };
+}
+export default connect(mapStateToProps)(MessageContent);

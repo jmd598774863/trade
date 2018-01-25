@@ -8,7 +8,7 @@ import NewMessageFooter from '../components/footer/NewMessageFooter';
 function NewMessage() {
   return (
     <Layout>
-        <MessageHeader text={'新建通告 '} path={'/'} back={true}/>
+        <MessageHeader text={'新建通告'} path={'/'} back={true}/>
         <NewMessageContent/>
         <NewMessageFooter/>
     </Layout>

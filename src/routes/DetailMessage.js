@@ -1,12 +1,17 @@
 import React from 'react';
 import { connect } from 'dva';
 import styles from './DetailMessage.css';
-
+import { Layout } from 'antd';
+import MessageHeader from '../components/header/MessageHeader';
+import DetailMessageContent from '../components/content/DetailMessageContent';
+import DetailMessageFooter from '../components/footer/DetailMessageFooter';
 function DetailMessage() {
   return (
-    <div className={styles.normal}>
-      Route Component: DetailMessage
-    </div>
+    <Layout>
+        <MessageHeader text={'通告详情'} path={'/'} back={true}/>
+        <DetailMessageContent/>
+        <DetailMessageFooter/>
+    </Layout>
   );
 }
 

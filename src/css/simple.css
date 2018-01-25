@@ -665,6 +665,9 @@
 .hg_750{
     height:750px
 }
+.hg_800{
+    height:800px
+}
 .txof{
     overflow: hidden;
     text-overflow:ellipsis;

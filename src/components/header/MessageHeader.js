@@ -14,7 +14,9 @@ function MessageHeader({text, path, back}) {
             <Row>
               <Col span={1}>
                 <Link to={path}>
-                  <Icon type="left" className={st.cl_white} />
+                  <div>
+                    <Icon type="left" className={st.cl_white} />
+                  </div>
                 </Link>
               </Col>
               <Col span={23}>{text}</Col>
