@@ -7,11 +7,11 @@ const { Footer } = Layout;
 
 function NewMessageFooter() {
   return (
-    <Footer className={st.pt_fixed+b+st.bt_0+b+st.wd_full+b+st.bg_grey4+b+st.hg_50+b+st.pd_15}>
+    <Footer className={st.pt_fixed+b+st.bt_0+b+st.wd_full+b+st.bg_grey4}>
       <Row>
           <Col span={22} className={st.cl_white}></Col>
-          <Col span={1} className={st.cl_white+b+st.ta_center}>保存</Col>
-          <Col span={1} className={st.cl_white+b+st.ta_center}>发送</Col>
+          <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>保存</div></Col>
+          <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
       </Row>
     </Footer>
   );

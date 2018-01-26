@@ -14,8 +14,8 @@ function DetailMessageContent() {
   }
   return (
     <div className={styles.normal}>
-      <div className={st.hg_64}/>
-      <Content style={{height:(sheight-114)}}>
+      <div className={st.hg_100}/>
+      <Content>
         <Row>
           <Col span={6}></Col>
           <Col span={12}>
@@ -26,7 +26,7 @@ function DetailMessageContent() {
           <Col span={6}></Col>
         </Row>
       </Content>
-      <div className={st.hg_50}/>
+      <div className={st.hg_100}/>
     </div>
   );
 }

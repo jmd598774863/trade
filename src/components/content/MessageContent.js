@@ -1,19 +1,28 @@
 import React from 'react';
 import styles from './MessageContent.css';
-import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon  } from 'antd';
+import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon,Modal  } from 'antd';
 import st from '../../css/simple.css';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
-function MessageContent({dispatch}) {
+function MessageContent({dispatch,delBtn}) {
   function checkAll(){
 
   }
   function toDetail(){
-    console.log(3);
     dispatch(routerRedux.push('/detailMessage'));
+  }
+  function closeDelete(){
+    delBtn = false;
+    dispatch({
+      type:'listMessage/delBtn',
+      payload:{delBtn}
+    })
+  }
+  function delMessage(){
+
   }
   return (
     <div className={styles.normal}>
@@ -45,6 +54,12 @@ function MessageContent({dispatch}) {
             <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
         </Row>
       </Content>
+      <Modal title="提示" visible={delBtn}
+        onOk={delMessage} onCancel={closeDelete}
+        okText="确定" cancelText="取消">
+        <p>您确定是否要删除当前通告？</p>
+      </Modal>
+      
       <div className={st.hg_50+b+st.bg_white}/>
     </div>
   );
@@ -52,6 +67,7 @@ function MessageContent({dispatch}) {
 
 function mapStateToProps(state) {
   return {
+    delBtn : state.listMessage.delBtn
   };
 }
 export default connect(mapStateToProps)(MessageContent);
