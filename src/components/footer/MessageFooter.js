@@ -2,8 +2,10 @@ import React from 'react';
 import styles from './MessageFooter.css';
 import { connect } from 'dva';
 import { Layout, Row, Col, Checkbox, Modal } from 'antd';
-import st from '../../css/simple.css';
+
 import { routerRedux } from 'dva/router';
+import st from '../../css/simple.css';
+
 const b = ' ';
 const { Footer } = Layout;
 
