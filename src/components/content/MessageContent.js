@@ -46,13 +46,19 @@ function MessageContent({dispatch,delBtn}) {
         <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_5+b+st.cl_blue3}>
           上周（4）
         </Row>
-        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
-            <Col span={1}><div className={st.pd_10}><Checkbox onChange={checkAll}/></div></Col>
-            <Col span={4}><div className={st.pd_10}>张三</div></Col>
-            <Col span={16}><div className={st.pd_10}>由于1号楼电力系统存在问题故障问题</div></Col>
-            <Col span={2}><div className={st.pd_10}>12月25日</div></Col>
-            <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
-        </Row>
+        {
+          window.app ?
+          window.app.mAggregations.pages['0'].oModels.messageModel.oData.AnnounceTitleSet.results.map((r,i)=>(
+            <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
+              <Col span={1}><div className={st.pd_10}><Checkbox onChange={checkAll}/></div></Col>
+              <Col span={4}><div className={st.pd_10}>{r.Zcreater}</div></Col>
+              <Col span={16}><div className={st.pd_10}>{r.Zsubject}</div></Col>
+              <Col span={2}><div className={st.pd_10}>{r.Zcreatedate}</div></Col>
+              <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
+            </Row>
+          )):''
+        }
+        
       </Content>
       <Modal title="提示" visible={delBtn}
         onOk={delMessage} onCancel={closeDelete}
