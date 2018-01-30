@@ -10,7 +10,7 @@ const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
 function DetailMessageContent() {
   function checkAll(){
-
+//0130
   }
   return (
     <div className={styles.normal}>
