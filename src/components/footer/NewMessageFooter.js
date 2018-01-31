@@ -2,19 +2,32 @@ import React from 'react';
 import styles from './MessageFooter.css';
 import { Layout, Row, Col, Checkbox } from 'antd';
 import st from '../../css/simple.css';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
+
 const b = ' ';
 const { Footer } = Layout;
-
-function NewMessageFooter() {
+function NewMessageFooter({recipients, theme, mainBody}) {
+    //保存
+  function saveMessage(){
+    window.app.mAggregations.pages["0"].oController.saveTradeMessage(recipients, theme, mainBody);
+  }
+  
   return (
     <Footer className={st.pt_fixed+b+st.bt_0+b+st.wd_full+b+st.bg_grey4}>
       <Row>
           <Col span={22} className={st.cl_white}></Col>
-          <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>保存</div></Col>
+          <Col span={1} className={st.cl_white+b+st.ta_center} onClick={saveMessage}><div className={st.pd_15_0+b+st.mg__15_0}>保存</div></Col>
           <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
       </Row>
     </Footer>
   );
 }
-
-export default NewMessageFooter;
+function mapStateToProps(state) {
+  return {
+    recipients : state.newMessage.recipients,
+    theme : state.newMessage.theme,
+    mainBody : state.newMessage.mainBody,
+  };
+}
+export default connect(mapStateToProps)(NewMessageFooter);

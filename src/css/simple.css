@@ -770,6 +770,11 @@
     resize:none;
     overflow:hidden;
 }
+.ta_no_bd4{
+    outline:none;
+    resize:none;
+    overflow:hidden;
+}
 /**
 *左滑动
 */

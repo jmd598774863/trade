@@ -1,6 +1,8 @@
 import React from 'react';
 import styles from './MessageContent.css';
 import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon } from 'antd';
+import { connect } from 'dva';
+import { routerRedux } from 'dva/router';
 import st from '../../css/simple.css';
 const b = ' ';
 const { Content } = Layout;
@@ -8,9 +10,28 @@ const InputGroup = Input.Group;
  //屏幕宽高
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function NewMessageContent() {
-  function checkAll(){
+function NewMessageContent({dispatch, recipients, theme, mainBody}) {
 
+  function recipientsChange(proxy){
+    recipients = proxy.target.value;
+    dispatch({
+      type:'newMessage/recipients',
+      payload:{recipients}
+    });
+  }
+  function themeChange(proxy){
+    theme = proxy.target.value;
+    dispatch({
+      type:'newMessage/theme',
+      payload:{theme}
+    });
+  }
+  function mainBodyChange(proxy){
+    mainBody = proxy.target.value;
+    dispatch({
+      type:'newMessage/mainBody',
+      payload:{mainBody}
+    });
   }
   return (
     <div className={styles.normal}>
@@ -18,20 +39,28 @@ function NewMessageContent() {
       <Content style={{height:(sheight-114)}}>
         <Row className={st.hg_60+b+st.pd_30_0}>
           <Col span={7} className={st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>收件人</Col>
-          <Col span={9}><Input style={{width:(swidth/5*2)}} /></Col>
+          <Col span={9}><Input onChange={recipientsChange} style={{width:(swidth/5*2)}} /></Col>
         </Row>
         <Row className={st.hg_60+b+st.pd_30_0}>
           <Col span={7} className={st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>主题</Col>
-          <Col span={9}><Input style={{width:(swidth/5*2)}} /></Col>
+          <Col span={9}><Input onChange={themeChange} style={{width:(swidth/5*2)}} /></Col>
         </Row>
-        <Row className={st.hg_60+b+st.pd_30_0}>
-          <Col span={7} className={st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>正文</Col>
-          <Col span={9} style={{width:(swidth/5*2)}}><Input className={st.ta_no_bd} type="textarea" autosize={{ minRows: 20, maxRows: 25 }} /></Col>
+        <Row className={st.pd_30_0}>
+          <Col span={7} className={st.hg_60+b+st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>正文</Col>
+          <Col span={9} style={{width:(swidth/5*2)}}>
+            <textarea onChange={mainBodyChange} className={st.pd_5_10+b+st.ta_no_bd4+b+st.wd_full+b+st.hg_300+b+st.bd_s+b+st.bd_w_1+b+st.bd_c_grey1+b+st.bd_r_5}/>
+          </Col>
         </Row>
       </Content>
       <div className={st.hg_50}/>
     </div>
   );
 }
-
-export default NewMessageContent;
+function mapStateToProps(state) {
+  return {
+    recipients : state.newMessage.recipients,
+    theme : state.newMessage.theme,
+    mainBody : state.newMessage.mainBody,
+  };
+}
+export default connect(mapStateToProps)(NewMessageContent);
