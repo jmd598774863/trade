@@ -2,11 +2,23 @@
 export default {
   namespace: 'listMessage',
   state: {
-    delBtn:false
+    showBtn:false,
+    mailModelShow:false,
+    checkList:[],
+    subject:'',
+    startTime:'',
+    endTime:'',
   },
   reducers: {
-    delBtn(state,{payload:{delBtn}}){
-      return {...state,delBtn};
+    showBtn(state,{payload:{showBtn}}){
+      return {...state,showBtn};
+    },
+    mailModelShow(state,{payload:{mailModelShow}}){
+      return {...state,mailModelShow};
+    },
+    refresh(state,{payload:{refresh}}){
+      refresh++;
+      return {...state,refresh}
     },
   },
   effects: {},

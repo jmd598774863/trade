@@ -15,7 +15,7 @@ function DetailMessageFooter() {
           <Col span={21} className={st.cl_white}></Col>
           <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>编辑</div></Col>
           <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
-          <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0} onClick={modelDelete}>删除</div></Col>
+          <Col onClick={modelDelete} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>删除</div></Col>
       </Row>
     </Footer>
   );

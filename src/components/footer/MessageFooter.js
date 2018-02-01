@@ -9,20 +9,25 @@ import st from '../../css/simple.css';
 const b = ' ';
 const { Footer } = Layout;
 
-function MessageFooter({dispatch,delBtn}) {
+function MessageFooter({dispatch, showBtn, mailModelShow}) {
   function newMessage(){
     dispatch(routerRedux.push('/newMessage'));
   }
-  function modelDelete(){
-    delBtn = true;
+  function showMailModal(){
+    mailModelShow = true;
     dispatch({
-      type:'listMessage/delBtn',
-      payload:{delBtn}
+      type:'listMessage/mailModelShow',
+      payload:{mailModelShow}
     });
   }
-  function deleteMessage(){
-    window.app.mAggregations.pages["0"].oController.deleteMessage();
+  function showDeleteModal(){
+    showBtn = true;
+    dispatch({
+      type:'listMessage/showBtn',
+      payload:{showBtn}
+    });
   }
+
   function mailMessage(){
     window.app.mAggregations.pages["0"].oController.mailMessage();
   }
@@ -32,15 +37,16 @@ function MessageFooter({dispatch,delBtn}) {
       <Row>
           <Col span={21} className={st.cl_white}></Col>
           <Col span={1} className={st.cl_white+b+st.ta_center} onClick={newMessage}><div className={st.pd_15_0+b+st.mg__15_0}>新建</div></Col>
-          <Col onClick={mailMessage} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
-          <Col onClick={deleteMessage} span={1} className={st.cl_white+b+st.ta_center}><div onClick={modelDelete} className={st.pd_15_0+b+st.mg__15_0}>删除</div></Col>
+          <Col onClick={showMailModal} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
+          <Col onClick={showDeleteModal} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>删除</div></Col>
       </Row>
     </Footer>
   );
 }
 function mapStateToProps(state) {
   return {
-    delBtn : state.listMessage.delBtn,
+    showBtn : state.listMessage.showBtn,
+    mailModelShow : state.listMessage.mailModelShow,
   };
 }
 export default connect(mapStateToProps)(MessageFooter);

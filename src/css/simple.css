@@ -138,6 +138,9 @@
 .tp_0{
     top:0px
 }
+.tp_5{
+    top:5px
+}
 .tp_10{
     top:10px
 }
@@ -572,6 +575,18 @@
 .wd_280{
     width: 280px
 }
+.wd_300{
+    width: 300px
+}
+.wd_400{
+    width: 400px
+}
+.wd_500{
+    width: 500px
+}
+.wd_600{
+    width: 600px
+}
 .wd_full{
     width:100%
 }
@@ -634,6 +649,12 @@
 }
 .hg_137{
     height:137px
+}
+.hg_150{
+    height:150px
+}
+.hg_160{
+    height:160px
 }
 .hg_182{
     height:182px
