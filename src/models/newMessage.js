@@ -5,6 +5,7 @@ export default {
     recipients:'',
     theme:'',
     mainBody:'',
+    newSuccess:false,
   },
   reducers: {
     recipients(state,{payload:{recipients}}){
@@ -15,6 +16,9 @@ export default {
     },
     mainBody(state,{payload:{mainBody}}){
       return {...state,mainBody};
+    },
+    newSuccess(state,{payload:{newSuccess}}){
+      return {...state,newSuccess};
     },
   },
   effects: {},

@@ -8,6 +8,7 @@ export default {
     subject:'',
     startTime:'',
     endTime:'',
+    refresh:0,
   },
   reducers: {
     showBtn(state,{payload:{showBtn}}){
@@ -19,6 +20,18 @@ export default {
     refresh(state,{payload:{refresh}}){
       refresh++;
       return {...state,refresh}
+    },
+    subject(state,{payload:{subject}}){
+      return {...state,subject};
+    },
+    startTime(state,{payload:{startTime}}){
+      return {...state,startTime};
+    },
+    endTime(state,{payload:{endTime}}){
+      return {...state,endTime};
+    },
+    checkList(state,{payload:{checkList}}){
+      return {...state,checkList};
     },
   },
   effects: {},

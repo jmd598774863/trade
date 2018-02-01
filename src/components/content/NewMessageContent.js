@@ -4,13 +4,14 @@ import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon } from 'ant
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import st from '../../css/simple.css';
+import MessageModal from '../modal/MessageModal'
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
  //屏幕宽高
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function NewMessageContent({dispatch, recipients, theme, mainBody}) {
+function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) {
 
   function recipientsChange(proxy){
     recipients = proxy.target.value;
@@ -33,6 +34,13 @@ function NewMessageContent({dispatch, recipients, theme, mainBody}) {
       payload:{mainBody}
     });
   }
+  function saveSuccess(){
+    newSuccess = false;
+    dispatch({
+      type:'newMessage/newSuccess',
+      payload:{newSuccess}
+    });
+  }
   return (
     <div className={styles.normal}>
       <div className={st.hg_64}/>
@@ -53,6 +61,9 @@ function NewMessageContent({dispatch, recipients, theme, mainBody}) {
         </Row>
       </Content>
       <div className={st.hg_50}/>
+      {
+        newSuccess?<MessageModal text={'操作成功'} okfun={saveSuccess} clfun={saveSuccess}/>:''
+      }
     </div>
   );
 }
@@ -61,6 +72,7 @@ function mapStateToProps(state) {
     recipients : state.newMessage.recipients,
     theme : state.newMessage.theme,
     mainBody : state.newMessage.mainBody,
+    newSuccess : state.newMessage.newSuccess,
   };
 }
 export default connect(mapStateToProps)(NewMessageContent);
