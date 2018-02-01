@@ -31,7 +31,7 @@ function DetailMessageContent({detailSubject, createTime,receiver,content}) {
             </div>
           </Col>
           <Col span={4}>
-            <div className={st.ta_center+b+st.bg_white+b+st.hg_50+b+st.pd_20} style={{fontSize:13}}>
+            <div className={st.ta_right+b+st.bg_white+b+st.hg_50+b+st.pd_20} style={{fontSize:13}}>
               {
               //   {detailSubject}
               // {createTime}
@@ -44,12 +44,12 @@ function DetailMessageContent({detailSubject, createTime,receiver,content}) {
         <Row>
           <Col span={6}></Col>
           <Col span={2}>
-            <div className={st.ta_left+b+st.bg_white+b+st.hg_200+b+st.pd_l_20}>
+            <div className={st.ta_left+b+st.bg_white+b+st.hg_40+b+st.pd_l_20}>
             <b>收件人：</b>
             </div>
           </Col>
           <Col span={10}>
-            <div className={st.ta_left+b+st.bg_white+b+st.hg_200+b+st.cl_grey3} style={{fontSize:13}}>
+            <div className={st.ta_left+b+st.bg_white+b+st.hg_40+b+st.cl_grey3} style={{fontSize:13}}>
               {
                 //{receiver}
               }
@@ -61,7 +61,8 @@ function DetailMessageContent({detailSubject, createTime,receiver,content}) {
         <Row>
           <Col span={6}></Col>
           <Col span={12}>
-            <div className={st.ta_center+b+st.bg_white+b+st.hg_400+b+st.pd_20}>
+            <div className={st.ta_center+b+st.bg_white+b+st.hg_600+b+st.pd_0_20}>
+            <div className={st.bd_t_s+b+st.bd_w_1+b+st.bd_c_grey1+b+st.pd_t_10}>
               {
                 //{content}
               }
@@ -74,6 +75,8 @@ function DetailMessageContent({detailSubject, createTime,receiver,content}) {
 　　三、违反《森林法》规定，进行开垦、采砂、采土和其他活动，致使林木受到毁坏的，依法赔偿损失;由林业主管部分责令停止违法行为，补种毁坏株数一倍以上三倍以下的树木，可以处毁坏林木价值一倍以上五倍以下的罚款。
 
 　　非法采伐、毁坏树木，性质恶劣、情节严重的要移交司法机关处理。构成犯罪的，要依法追究刑事责任。
+            
+              </div>
             </div>
           </Col>
           <Col span={6}></Col>

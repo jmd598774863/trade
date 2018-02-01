@@ -742,6 +742,9 @@
 .bd_b_s{
     border-bottom-style:solid
 }
+.bd_t_s{
+    border-top-style:solid
+}
 .bd_l_s{
     border-left-style:solid
 }
