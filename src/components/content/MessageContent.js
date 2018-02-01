@@ -10,7 +10,7 @@ const { Content } = Layout;
 const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess}) {
+function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content }) {
 
   console.log('refresh');
   function checkAll(e){
@@ -36,7 +36,28 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       payload:{refresh}
     });
   }
-  function toDetail(){
+  function toDetail(sub,create,rece,zcont){
+    console.log(777);
+    detailSubject = sub;
+    createTime = create;
+    receiver = rece;
+    content = zcont;
+    dispatch({
+      type:'detailMessage/detailSubject',
+      payload:{detailSubject}
+    });
+    dispatch({
+      type:'detailMessage/createTime',
+      payload:{createTime}
+    });
+    dispatch({
+      type:'detailMessage/receiver',
+      payload:{receiver}
+    });
+    dispatch({
+      type:'detailMessage/content',
+      payload:{content}
+    });
     dispatch(routerRedux.push('/detailMessage'));
   }
   function delFun(){
@@ -201,25 +222,19 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
               <Col span={4}><div className={st.pd_10}>{r.Zcreater}</div></Col>
               <Col span={16}><div className={st.pd_10}>{r.Zsubject}</div></Col>
               <Col span={2}><div className={st.pd_10}>{r.Zcreatedate}</div></Col>
-              <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
+              <Col span={1}><div onClick={toDetail.bind(this,r.Zsubject,r.Zcreatedate,r.Zrecepter,r.Zcontent)} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
             </Row>
           )):''
         }
        {
-      //   <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
-      //   <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[0]} onChange={changeCheckBox.bind(this,0)}/></div></Col>
-      //   <Col span={4}><div className={st.pd_10}>aaaa</div></Col>
-      //   <Col span={16}><div className={st.pd_10}>bbb</div></Col>
-      //   <Col span={2}><div className={st.pd_10}>ccc</div></Col>
-      //   <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
-      // </Row>
-      // <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
-      //   <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[1]} onChange={changeCheckBox.bind(this,1)}/></div></Col>
-      //   <Col span={4}><div className={st.pd_10}>ccc</div></Col>
-      //   <Col span={16}><div className={st.pd_10}>cccc</div></Col>
-      //   <Col span={2}><div className={st.pd_10}>cccc</div></Col>
-      //   <Col span={1}><div onClick={toDetail} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
-      // </Row>
+        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
+        <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[0]} onChange={changeCheckBox.bind(this,0)}/></div></Col>
+        <Col span={4}><div className={st.pd_10}>aaaa</div></Col>
+        <Col span={16}><div className={st.pd_10}>bbb</div></Col>
+        <Col span={2}><div className={st.pd_10}>ccc</div></Col>
+        <Col span={1}><div onClick={toDetail.bind(this,'','','','')} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
+      </Row>
+
        }
        
        <Row>
@@ -249,6 +264,10 @@ function mapStateToProps(state) {
     startTime: state.listMessage.startTime,
     endTime: state.listMessage.endTime,
     newSuccess : state.newMessage.newSuccess,
+    detailSubject: state.detailMessage.detailSubject,
+    createTime:state.detailMessage.createTime,
+    receiver:state.detailMessage.receiver,
+    content:state.detailMessage.content,
   };
 }
 export default connect(mapStateToProps)(MessageContent);

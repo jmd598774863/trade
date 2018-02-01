@@ -362,6 +362,9 @@
 .pd_15{
     padding: 15px
 }
+.pd_20{
+    padding: 20px
+}
 .pd_5_10{
     padding: 5px 10px
 }
@@ -457,6 +460,9 @@
 }
 .pd_l_16{
     padding-left: 16px;
+}
+.pd_l_20{
+    padding-left: 20px;
 }
 .pd_l_25{
     padding-left: 25px;

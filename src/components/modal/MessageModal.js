@@ -1,7 +1,7 @@
 import React from 'react';
 import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon } from 'antd';
 import st from '../../css/simple.css';
-import warningimg from '../../assets/warninggg.png';
+import war from '../../assets/war.png';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 const b = ' ';
@@ -24,7 +24,7 @@ function MessageModal({dispatch, text, okfun, clfun}) {
           <div className={st.wd_600+b+st.ta_center+b+st.pd_10_0}>提示</div>
         </Row>
         <Row className={st.hg_137+b+st.bd_s+b+st.bd_w_1+b+st.bd_c_grey1+b+st.bg_white}>
-          <Col span={4} className={st.pd_t_10+b+st.pd_l_27}><img src={warningimg} className={st.wd_40}/></Col>
+          <Col span={4} className={st.pd_t_10+b+st.pd_l_27}><img src={war} className={st.wd_40}/></Col>
           <Col span={20} className={st.pd_20_0}>{text}</Col>
         </Row>
         <Row className={st.bg_grey4+b+st.cl_white}>
