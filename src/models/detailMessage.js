@@ -6,6 +6,7 @@ export default {
     createTime:'',
     receiver:'',
     content:'',
+    number:'',
   },
   reducers: {
     detailSubject(state,{payload:{detailSubject}}){
@@ -19,6 +20,9 @@ export default {
     },
     content(state,{payload:{content}}){
       return {...state,content};
+    },
+    number(state,{payload:{number}}){
+      return {...state,number};
     },
   },
   effects: {},

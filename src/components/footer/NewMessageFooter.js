@@ -14,16 +14,12 @@ function NewMessageFooter({dispatch, recipients, theme, mainBody, newSuccess, su
     let promise = new Promise(
       function(resolve, reject) {
         setTimeout(function(){
-          console.log(3);
           if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-            console.log('S');
             window.app.mAggregations.pages["0"].oController.queryMessage(subject, startTime, endTime);
             let promise = new Promise(
               function(resolve, reject) {
                 setTimeout(function(){
-                  console.log(3);
                   if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-                    console.log('S');
                     dispatch({
                       type:'listMessage/refresh',
                       payload:{refresh}
@@ -35,7 +31,6 @@ function NewMessageFooter({dispatch, recipients, theme, mainBody, newSuccess, su
                     });
                     resolve(); 
                   }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-                    console.log('E');
                     reject();
                   }
               }, 250); 
@@ -43,20 +38,18 @@ function NewMessageFooter({dispatch, recipients, theme, mainBody, newSuccess, su
             );
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('E');
             reject();
           }
        }, 250); 
       }
     );
   }
-  
+
   return (
     <Footer className={st.pt_fixed+b+st.bt_0+b+st.wd_full+b+st.bg_grey4}>
       <Row>
-          <Col span={22} className={st.cl_white}></Col>
-          <Col span={1} className={st.cl_white+b+st.ta_center} onClick={saveMessage}><div className={st.pd_15_0+b+st.mg__15_0}>保存</div></Col>
-          <Col span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
+          <Col span={23} className={st.cl_white}></Col>
+          <Col span={1} onClick={saveMessage} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>保存</div></Col>
       </Row>
     </Footer>
   );

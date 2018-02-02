@@ -4,18 +4,15 @@ import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon,Modal  } fr
 import st from '../../css/simple.css';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
-import MessageModal from '../modal/MessageModal'
+import MessageModal from '../modal/MessageModal';
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content }) {
+function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number }) {
 
-  console.log('refresh');
   function checkAll(e){
-    console.log('f');
-    console.log(e.target.checked);
     if(e.target.checked){
       if(checkList.length==0){
         var len = window.app.mAggregations.pages['0'].oModels.messageModel.oData.AnnounceTitleSet.results.length;
@@ -36,12 +33,12 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       payload:{refresh}
     });
   }
-  function toDetail(sub,create,rece,zcont){
-    console.log(777);
+  function toDetail(sub,create,rece,zcont,znum){
     detailSubject = sub;
     createTime = create;
     receiver = rece;
     content = zcont;
+    number = znum;
     dispatch({
       type:'detailMessage/detailSubject',
       payload:{detailSubject}
@@ -58,6 +55,10 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       type:'detailMessage/content',
       payload:{content}
     });
+    dispatch({
+      type:'detailMessage/number',
+      payload:{number}
+    });
     dispatch(routerRedux.push('/detailMessage'));
   }
   function delFun(){
@@ -65,9 +66,7 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       let promise = new Promise(
         function(resolve, reject) {
           setTimeout(function(){
-            console.log(3);
             if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-              console.log('S');
               queryMessage(true);
               showBtn = false;
               dispatch({
@@ -85,7 +84,11 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
                 payload:{checkList}
               });
             }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-              console.log('E');
+              showBtn = false;
+              dispatch({
+                type:'listMessage/showBtn',
+                payload:{showBtn}
+              });
               reject();
             }
          }, 250); 
@@ -99,9 +102,7 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
     let promise = new Promise(
       function(resolve, reject) {
         setTimeout(function(){
-          console.log(3);
           if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-            console.log('S');
             mailModelShow = false;
             dispatch({
               type:'listMessage/mailModelShow',
@@ -114,7 +115,6 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('E');
             reject();
           }
        }, 250); 
@@ -147,16 +147,13 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
     let promise = new Promise(
       function(resolve, reject) {
         setTimeout(function(){
-          console.log(3);
           if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-            console.log('S');
             dispatch({
               type:'listMessage/refresh',
               payload:{refresh}
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('E');
             reject();
           }
        }, 250); 
@@ -222,18 +219,18 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
               <Col span={4}><div className={st.pd_10}>{r.Zcreater}</div></Col>
               <Col span={16}><div className={st.pd_10}>{r.Zsubject}</div></Col>
               <Col span={2}><div className={st.pd_10}>{r.Zcreatedate}</div></Col>
-              <Col span={1}><div onClick={toDetail.bind(this,r.Zsubject,r.Zcreatedate,r.Zrecepter,r.Zcontent)} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
+              <Col span={1}><div onClick={toDetail.bind(this,r.Zsubject,r.Zcreatedate,r.Zrecepter,r.Zcontent,r.Znumber)} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
             </Row>
           )):''
         }
        {
-        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
-        <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[0]} onChange={changeCheckBox.bind(this,0)}/></div></Col>
-        <Col span={4}><div className={st.pd_10}>aaaa</div></Col>
-        <Col span={16}><div className={st.pd_10}>bbb</div></Col>
-        <Col span={2}><div className={st.pd_10}>ccc</div></Col>
-        <Col span={1}><div onClick={toDetail.bind(this,'','','','')} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
-      </Row>
+      //   <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
+      //   <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[0]} onChange={changeCheckBox.bind(this,0)}/></div></Col>
+      //   <Col span={4}><div className={st.pd_10}>aaaa</div></Col>
+      //   <Col span={16}><div className={st.pd_10}>bbb</div></Col>
+      //   <Col span={2}><div className={st.pd_10}>ccc</div></Col>
+      //   <Col span={1}><div onClick={toDetail.bind(this,'','','','','')} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
+      // </Row>
 
        }
        
@@ -268,6 +265,7 @@ function mapStateToProps(state) {
     createTime:state.detailMessage.createTime,
     receiver:state.detailMessage.receiver,
     content:state.detailMessage.content,
+    number:state.detailMessage.number,
   };
 }
 export default connect(mapStateToProps)(MessageContent);
