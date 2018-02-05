@@ -7,12 +7,26 @@ import { routerRedux } from 'dva/router';
 const b = ' ';
 const { Footer } = Layout;
 
-function DetailMessageFooter({dispatch}) {
-  function modelDelete(){
+function DetailMessageFooter({dispatch,idx,sendMessage}) {
 
-  }
   function sendMail(){
-
+    window.app.mAggregations.pages["0"].oController.mailOne(idx);
+    let promise = new Promise(
+      function(resolve, reject) {
+        setTimeout(function(){
+          if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
+            sendMessage = true;
+            dispatch({
+              type:'detailMessage/sendMessage',
+              payload:{sendMessage}
+            });
+            resolve(); 
+          }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
+            reject();
+          }
+       }, 250); 
+      }
+    );
   }
   function toEdit(){
     dispatch(routerRedux.push('/editMessage'));
@@ -20,10 +34,9 @@ function DetailMessageFooter({dispatch}) {
   return (
     <Footer className={st.pt_fixed+b+st.bt_0+b+st.wd_full+b+st.bg_grey4}>
       <Row>
-          <Col span={21} className={st.cl_white}></Col>
+          <Col span={22} className={st.cl_white}></Col>
           <Col onClick={toEdit} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>编辑</div></Col>
           <Col onClick={sendMail} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>发送</div></Col>
-          <Col onClick={modelDelete} span={1} className={st.cl_white+b+st.ta_center}><div className={st.pd_15_0+b+st.mg__15_0}>删除</div></Col>
       </Row>
     </Footer>
   );
@@ -31,7 +44,8 @@ function DetailMessageFooter({dispatch}) {
 
 function mapStateToProps(state) {
   return {
-
+    idx:state.detailMessage.idx,
+    sendMessage : state.detailMessage.sendMessage,
   };
 }
 export default connect(mapStateToProps)(DetailMessageFooter);

@@ -7,6 +7,7 @@ export default {
     receiver:'',
     content:'',
     number:'',
+    idx:-1,
   },
   reducers: {
     detailSubject(state,{payload:{detailSubject}}){
@@ -23,6 +24,9 @@ export default {
     },
     number(state,{payload:{number}}){
       return {...state,number};
+    },
+    idx(state,{payload:{idx}}){
+      return {...state,idx};
     },
   },
   effects: {},

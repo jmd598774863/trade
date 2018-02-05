@@ -491,6 +491,9 @@
 .fs_60{
     font-size: 60
 }
+.wb{
+    word-break:break-all
+}
 .wd_10{
     width:10px
 }

@@ -10,7 +10,7 @@ const { Content } = Layout;
 const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number }) {
+function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number,idx }) {
 
   function checkAll(e){
     if(e.target.checked){
@@ -33,12 +33,13 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       payload:{refresh}
     });
   }
-  function toDetail(sub,create,rece,zcont,znum){
+  function toDetail(sub,create,rece,zcont,znum,ii){
     detailSubject = sub;
     createTime = create;
     receiver = rece;
     content = zcont;
     number = znum;
+    idx = ii;
     dispatch({
       type:'detailMessage/detailSubject',
       payload:{detailSubject}
@@ -58,6 +59,10 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
     dispatch({
       type:'detailMessage/number',
       payload:{number}
+    });
+    dispatch({
+      type:'detailMessage/idx',
+      payload:{idx}
     });
     dispatch(routerRedux.push('/detailMessage'));
   }
@@ -94,10 +99,9 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
          }, 250); 
         }
       );
-
   }
+
   function mailFun(){
-    
     window.app.mAggregations.pages["0"].oController.mailMessage(checkList);
     let promise = new Promise(
       function(resolve, reject) {
@@ -219,23 +223,12 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
               <Col span={4}><div className={st.pd_10}>{r.Zcreater}</div></Col>
               <Col span={16}><div className={st.pd_10}>{r.Zsubject}</div></Col>
               <Col span={2}><div className={st.pd_10}>{r.Zcreatedate}</div></Col>
-              <Col span={1}><div onClick={toDetail.bind(this,r.Zsubject,r.Zcreatedate,r.Zrecepter,r.Zcontent,r.Znumber)} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
+              <Col span={1}><div onClick={toDetail.bind(this,r.Zsubject,r.Zcreatedate,r.Zrecepter,r.Zcontent,r.Znumber,i)} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
             </Row>
           )):''
         }
-       {
-      //   <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
-      //   <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[0]} onChange={changeCheckBox.bind(this,0)}/></div></Col>
-      //   <Col span={4}><div className={st.pd_10}>aaaa</div></Col>
-      //   <Col span={16}><div className={st.pd_10}>bbb</div></Col>
-      //   <Col span={2}><div className={st.pd_10}>ccc</div></Col>
-      //   <Col span={1}><div onClick={toDetail.bind(this,'','','','','')} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
-      // </Row>
-
-       }
-       
        <Row>
-       <div className={st.hg_68+b+st.bg_white}/>
+        <div className={st.hg_68+b+st.bg_white}/>
        </Row>
       </Content>
       {
@@ -266,6 +259,7 @@ function mapStateToProps(state) {
     receiver:state.detailMessage.receiver,
     content:state.detailMessage.content,
     number:state.detailMessage.number,
+    idx:state.detailMessage.idx,
   };
 }
 export default connect(mapStateToProps)(MessageContent);

@@ -5,6 +5,7 @@ import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
 import st from '../../css/simple.css';
 import MessageModal from '../modal/MessageModal'
+const TextArea = Input.TextArea;
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
@@ -12,7 +13,7 @@ const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
 function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) {
-
+ const cc = { minRows: 9, maxRows: 6 };
   function recipientsChange(proxy){
     recipients = proxy.target.value;
     dispatch({
@@ -28,7 +29,8 @@ function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) 
     });
   }
   function mainBodyChange(proxy){
-    mainBody = proxy.target.value;
+    mainBody = proxy.target.value;//.replace(/\n/g,"<br/>").replace(/\s/g,"&nbsp;")
+    console.log(mainBody);
     dispatch({
       type:'newMessage/mainBody',
       payload:{mainBody}
@@ -56,7 +58,10 @@ function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) 
         <Row className={st.pd_30_0}>
           <Col span={7} className={st.hg_60+b+st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>正文</Col>
           <Col span={9} style={{width:(swidth/5*2)}}>
-            <textarea onChange={mainBodyChange} className={st.pd_5_10+b+st.ta_no_bd4+b+st.wd_full+b+st.hg_300+b+st.bd_s+b+st.bd_w_1+b+st.bd_c_grey1+b+st.bd_r_5}/>
+          <TextArea onChange={mainBodyChange} rows={10} />
+          {
+            //<textarea onChange={mainBodyChange} className={st.pd_5_10+b+st.ta_no_bd4+b+st.wd_full+b+st.hg_300+b+st.bd_s+b+st.bd_w_1+b+st.bd_c_grey1+b+st.bd_r_5}/>
+          }
           </Col>
         </Row>
       </Content>
