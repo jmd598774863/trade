@@ -7,9 +7,16 @@ import { routerRedux } from 'dva/router';
 
 const b = ' ';
 const { Footer } = Layout;
-function NewMessageFooter({dispatch, recipients, theme, mainBody, newSuccess, subject, startTime, endTime, refresh }) {
+
+function NewMessageFooter({checkModal, warningText, dispatch, recipients, theme, mainBody, newSuccess, subject, startTime, endTime, refresh }) {
     //保存
   function saveMessage(){
+    if(recipients.length>0){
+      if(recipients.charAt(recipients.length-1)==';'){
+        recipients = recipients.substring(0,recipients.length-1);
+        console.log(recipients);
+      }
+    }
     window.app.mAggregations.pages["0"].oController.saveTradeMessage(recipients, theme, mainBody);
     let promise = new Promise(
       function(resolve, reject) {
@@ -38,6 +45,11 @@ function NewMessageFooter({dispatch, recipients, theme, mainBody, newSuccess, su
             );
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
+            warningText = window.app.mAggregations.pages["0"].oController.msg;
+            dispatch({
+              type:'newMessage/warningText',
+              payload:{warningText}
+            });
             reject();
           }
        }, 250); 
@@ -64,6 +76,8 @@ function mapStateToProps(state) {
     startTime: state.listMessage.startTime,
     endTime: state.listMessage.endTime,
     refresh: state.listMessage.refresh,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(NewMessageFooter);

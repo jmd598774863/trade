@@ -7,6 +7,7 @@ import { routerRedux } from 'dva/router';
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
+const TextArea = Input.TextArea;
  //屏幕宽高
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
@@ -17,6 +18,10 @@ function DetailMessageContent({detailSubject, createTime,receiver,content,sendMe
       type:'detailMessage/sendMessage',
       payload:{sendMessage}
     });
+  }
+  function mouseOver(){
+    console.log('over');
+    return false;
   }
   return (
     <div className={styles.normal}>
@@ -55,7 +60,9 @@ function DetailMessageContent({detailSubject, createTime,receiver,content,sendMe
           <Col span={12}>
             <div className={st.ta_center+b+st.bg_white+b+st.hg_600+b+st.pd_0_20}>
               <div className={st.bd_t_s+b+st.bd_w_1+b+st.bd_c_grey1+b+st.pd_t_10+b+st.wd_full+b+st.wb} >
-                <pre>{content}</pre>
+                {//<pre>{content}</pre>
+                }
+                <TextArea defaultValue={content} disabled={true} style={{height:580,backgroundColor:'white',color:'black'}} onMouseOver={mouseOver}/>
               </div>
             </div>
           </Col>

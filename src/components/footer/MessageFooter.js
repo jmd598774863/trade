@@ -14,6 +14,7 @@ function MessageFooter({dispatch, showBtn, mailModelShow}) {
     dispatch(routerRedux.push('/newMessage'));
   }
   function showMailModal(){
+    
     mailModelShow = true;
     dispatch({
       type:'listMessage/mailModelShow',

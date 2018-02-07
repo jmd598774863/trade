@@ -13,7 +13,6 @@ const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
 function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) {
- const cc = { minRows: 9, maxRows: 6 };
   function recipientsChange(proxy){
     recipients = proxy.target.value;
     dispatch({
@@ -29,7 +28,7 @@ function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) 
     });
   }
   function mainBodyChange(proxy){
-    mainBody = proxy.target.value;//.replace(/\n/g,"<br/>").replace(/\s/g,"&nbsp;")
+    mainBody = proxy.target.value.replace(/\n/g,"\r\n");//.replace(/\n/g,"<br/>").replace(/\s/g,"&nbsp;")
     console.log(mainBody);
     dispatch({
       type:'newMessage/mainBody',
@@ -49,7 +48,7 @@ function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) 
       <Content style={{height:(sheight-114)}}>
         <Row className={st.hg_60+b+st.pd_30_0}>
           <Col span={7} className={st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>收件人</Col>
-          <Col span={9}><Input onChange={recipientsChange} style={{width:(swidth/5*2)}} /></Col>
+          <Col span={9}><Input onChange={recipientsChange} placeholder='多个收件人请使用英文;分割' style={{width:(swidth/5*2)}} /></Col>
         </Row>
         <Row className={st.hg_60+b+st.pd_30_0}>
           <Col span={7} className={st.ta_right+b+st.pd_4_0+b+st.pd_r_10}>主题</Col>

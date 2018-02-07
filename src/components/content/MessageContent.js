@@ -112,6 +112,11 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
               type:'listMessage/mailModelShow',
               payload:{mailModelShow}
             });
+            checkList = [];
+              dispatch({
+                type:'listMessage/checkList',
+                payload:{checkList}
+              });
             newSuccess = true;
             dispatch({
               type:'newMessage/newSuccess',

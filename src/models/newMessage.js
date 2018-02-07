@@ -6,6 +6,8 @@ export default {
     theme:'',
     mainBody:'',
     newSuccess:false,
+    checkModal:false,
+    warningText:'操作失败',
   },
   reducers: {
     recipients(state,{payload:{recipients}}){
@@ -19,6 +21,12 @@ export default {
     },
     newSuccess(state,{payload:{newSuccess}}){
       return {...state,newSuccess};
+    },
+    checkModal(state,{payload:{checkModal}}){
+      return {...state,checkModal};
+    },
+    warningText(state,{payload:{warningText}}){
+      return {...state,warningText};
     },
   },
   effects: {},
