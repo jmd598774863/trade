@@ -7,7 +7,7 @@ import { routerRedux } from 'dva/router';
 const b = ' ';
 const { Footer } = Layout;
 
-function DetailMessageFooter({dispatch,idx,sendMessage}) {
+function DetailMessageFooter({dispatch,idx,sendMessage,warningText,checkModal}) {
 
   function sendMail(){
     window.app.mAggregations.pages["0"].oController.mailOne(idx);
@@ -22,6 +22,17 @@ function DetailMessageFooter({dispatch,idx,sendMessage}) {
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
+            console.log('ese');
+            warningText = window.app.mAggregations.pages["0"].oController.msg;
+            dispatch({
+              type:'newMessage/warningText',
+              payload:{warningText}
+            });
+            checkModal = true;
+            dispatch({
+              type:'newMessage/checkModal',
+              payload:{checkModal}
+            });
             reject();
           }
        }, 250);
@@ -51,6 +62,8 @@ function mapStateToProps(state) {
   return {
     idx:state.detailMessage.idx,
     sendMessage : state.detailMessage.sendMessage,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(DetailMessageFooter);

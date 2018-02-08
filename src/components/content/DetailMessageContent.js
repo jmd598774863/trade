@@ -4,6 +4,7 @@ import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon } from 'ant
 import st from '../../css/simple.css';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
+import MessageModal from '../modal/MessageModal';
 const b = ' ';
 const { Content } = Layout;
 const InputGroup = Input.Group;
@@ -11,7 +12,7 @@ const TextArea = Input.TextArea;
  //屏幕宽高
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function DetailMessageContent({detailSubject, createTime,receiver,content,sendMessage}) {
+function DetailMessageContent({dispatch,detailSubject, createTime,receiver,content,sendMessage,checkModal,warningText}) {
   function mailSuccess(){
     sendMessage = false;
     dispatch({
@@ -20,8 +21,14 @@ function DetailMessageContent({detailSubject, createTime,receiver,content,sendMe
     });
   }
   function mouseOver(){
-    console.log('over');
     return false;
+  }
+  function resultModal(){
+    checkModal = false;
+    dispatch({
+      type:'newMessage/checkModal',
+      payload:{checkModal}
+    });
   }
   return (
     <div className={styles.normal}>
@@ -73,6 +80,9 @@ function DetailMessageContent({detailSubject, createTime,receiver,content,sendMe
       {
         sendMessage?<MessageModal text={'操作成功'} okfun={mailSuccess} clfun={mailSuccess}/>:''
       }
+      {
+        checkModal?<MessageModal text={warningText} okfun={resultModal} clfun={resultModal}/>:''
+      }
     </div>
   );
 }
@@ -83,6 +93,8 @@ function mapStateToProps(state) {
     receiver:state.detailMessage.receiver,
     content:state.detailMessage.content,
     sendMessage : state.detailMessage.sendMessage,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(DetailMessageContent);

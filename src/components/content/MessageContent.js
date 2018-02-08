@@ -10,7 +10,7 @@ const { Content } = Layout;
 const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number,idx }) {
+function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number,idx }) {
 
   function fenye(pageNumber){
     queryMessage(pageNumber);
@@ -31,6 +31,11 @@ function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelSho
         checkList[i] = false;
       }
     }
+    allCheck = !allCheck;
+    dispatch({
+      type:'listMessage/allCheck',
+      payload:{allCheck}
+    });
     dispatch({
       type:'listMessage/refresh',
       payload:{refresh}
@@ -98,6 +103,11 @@ function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelSho
                 type:'listMessage/checkList',
                 payload:{checkList}
               });
+              allCheck = false;
+              dispatch({
+                type:'listMessage/allCheck',
+                payload:{allCheck}
+              });
             }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
               showBtn = false;
               dispatch({
@@ -114,6 +124,11 @@ function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelSho
               dispatch({
                 type:'newMessage/checkModal',
                 payload:{checkModal}
+              });
+              allCheck = false;
+              dispatch({
+                type:'listMessage/allCheck',
+                payload:{allCheck}
               });
               reject();
             }
@@ -148,6 +163,11 @@ function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelSho
               type:'newMessage/newSuccess',
               payload:{newSuccess}
             });
+            allCheck = false;
+            dispatch({
+              type:'listMessage/allCheck',
+              payload:{allCheck}
+            });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
             console.log('eee');
@@ -165,6 +185,11 @@ function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelSho
             dispatch({
               type:'newMessage/checkModal',
               payload:{checkModal}
+            });
+            allCheck = false;
+            dispatch({
+              type:'listMessage/allCheck',
+              payload:{allCheck}
             });
             reject();
           }
@@ -264,7 +289,7 @@ function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelSho
           </InputGroup>
         </Row>
         <Row className={st.bd_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_4}>
-            <Col span={1} className={st.pd_l_5}><Checkbox onChange={checkAll}/></Col>
+            <Col span={1} className={st.pd_l_5}><Checkbox checked={allCheck} onChange={checkAll}/></Col>
             <Col span={4} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>创建人</Col>
             <Col span={14} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>主题</Col>
             <Col span={5} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>时间</Col>
@@ -332,6 +357,7 @@ function mapStateToProps(state) {
     idx:state.detailMessage.idx,
     checkModal:state.newMessage.checkModal,
     warningText:state.newMessage.warningText,
+    allCheck: state.listMessage.allCheck,
   };
 }
 export default connect(mapStateToProps)(MessageContent);

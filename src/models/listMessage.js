@@ -5,6 +5,7 @@ export default {
     showBtn:false,
     mailModelShow:false,
     checkList:[],
+    allCheck:false,
     subject:'',
     startTime:'',
     endTime:'',
@@ -33,6 +34,10 @@ export default {
     checkList(state,{payload:{checkList}}){
       return {...state,checkList};
     },
+    allCheck(state,{payload:{allCheck}}){
+      return {...state,allCheck};
+    },
+    
   },
   effects: {},
   subscriptions: {},
