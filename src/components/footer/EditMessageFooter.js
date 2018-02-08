@@ -7,29 +7,138 @@ import { routerRedux } from 'dva/router';
 const b = ' ';
 const { Footer } = Layout;
 
-function EditMessageFooter({dispatch, receiver, detailSubject, content, number,newSuccess}) {
+function EditMessageFooter({checkModal, warningText,dispatch, receiver, detailSubject, content, number,newSuccess}) {
 
+  function queryMessage(num){
+    window.app.mAggregations.pages["0"].oController.queryMessage('', '', '',num);
+    let promise = new Promise(
+      function(resolve, reject) {
+        setTimeout(function(){
+          if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
+            resolve(); 
+          }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
+            reject();
+          }
+       }, 250); 
+      }
+    );
+    promise.then(function(r){
+      console.log('then');
+    }).catch(function(r){
+      console.log('catch');
+    });
+  }
   function editSave(){
+    if(receiver == ''){
+      warningText = '收件人不能为空';
+      dispatch({
+        type:'newMessage/warningText',
+        payload:{warningText}
+      });
+      checkModal = true;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
+      return;
+    }
+    if(receiver.length>0){
+      if(receiver.charAt(receiver.length-1)==';'){
+        receiver = receiver.substring(0,receiver.length-1);
+      }
+    }
+    //邮箱正则
+    var regex = /[\w!#$%&'*+/=?^_`{|}~-]+(?:\.[\w!#$%&'*+/=?^_`{|}~-]+)*@(?:[\w](?:[\w-]*[\w])?\.)+[\w](?:[\w-]*[\w])?/;
+    var b = false;
+    if(receiver.indexOf(';') == -1){
+      //一个邮箱
+      b = regex.test(receiver);
+    }else{
+      //多个邮箱
+      const array = recipients.split(';');
+      for(var i=0;i<array.length;i++){
+        if(!regex.test(array[i])){
+         b = false;
+         break;
+        }else{
+          b = true;
+        }
+      }
+    }
+    if(b == false){
+      warningText = '收件人邮箱格式不正确';
+      dispatch({
+        type:'newMessage/warningText',
+        payload:{warningText}
+      });
+      checkModal = true;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
+      return;
+    }
+    if(detailSubject == ''){
+      warningText = '主题不能为空';
+      dispatch({
+        type:'newMessage/warningText',
+        payload:{warningText}
+      });
+      checkModal = true;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
+      return;
+    }
+    if(content == ''){
+      warningText = '正文不能为空';
+      dispatch({
+        type:'newMessage/warningText',
+        payload:{warningText}
+      });
+      checkModal = true;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
+      return;
+    }
     window.app.mAggregations.pages["0"].oController.editTradeMessage(number,receiver, detailSubject, content);
     let promise = new Promise(
-        function(resolve, reject) {
-          setTimeout(function(){
-            
-            if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-                
-
-              newSuccess = true;
-              dispatch({
-                type:'newMessage/newSuccess',
-                payload:{newSuccess}
-              });
-              resolve(); 
-            }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-              reject();
-            }
-         }, 250); 
-        }
-      );
+      function(resolve, reject) {
+        setTimeout(function(){
+          
+          if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
+            queryMessage(0);
+            newSuccess = true;
+            dispatch({
+              type:'newMessage/newSuccess',
+              payload:{newSuccess}
+            });
+            resolve(); 
+          }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
+            console.log('eee');
+            warningText = window.app.mAggregations.pages["0"].oController.msg;
+            dispatch({
+              type:'newMessage/warningText',
+              payload:{warningText}
+            });
+            checkModal = true;
+            dispatch({
+              type:'newMessage/checkModal',
+              payload:{checkModal}
+            });
+            reject();
+          }
+        }, 250); 
+      }
+    );
+    promise.then(function(r){
+      console.log('then');
+    }).catch(function(r){
+      console.log('catch');
+    });
   }
 
   return (
@@ -49,7 +158,8 @@ function mapStateToProps(state) {
     content:state.detailMessage.content,
     number:state.detailMessage.number,
     newSuccess : state.newMessage.newSuccess,
-
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(EditMessageFooter);

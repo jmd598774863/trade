@@ -24,9 +24,14 @@ function DetailMessageFooter({dispatch,idx,sendMessage}) {
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
             reject();
           }
-       }, 250); 
+       }, 250);
       }
     );
+    promise.then(function(r){
+      console.log('then');
+    }).catch(function(r){
+      console.log('catch');
+    });
   }
   function toEdit(){
     dispatch(routerRedux.push('/editMessage'));

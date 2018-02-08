@@ -1,6 +1,6 @@
 import React from 'react';
 import styles from './MessageContent.css';
-import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon,Modal  } from 'antd';
+import { Layout, Row, Col, Input, DatePicker, Button, Checkbox, Icon,Modal,Pagination  } from 'antd';
 import st from '../../css/simple.css';
 import { connect } from 'dva';
 import { routerRedux } from 'dva/router';
@@ -10,13 +10,16 @@ const { Content } = Layout;
 const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number,idx }) {
+function MessageContent({checkModal, warningText,dispatch, showBtn, mailModelShow, checkList, refresh, subject, startTime, endTime, newSuccess,detailSubject,createTime,receiver,content,number,idx }) {
 
+  function fenye(pageNumber){
+    queryMessage(pageNumber);
+  }
   function checkAll(e){
     if(e.target.checked){
       if(checkList.length==0){
         var len = window.app.mAggregations.pages['0'].oModels.messageModel.oData.AnnounceTitleSet.results.length;
-        for(var i=0;i<len-1;i++){
+        for(var i=0;i<len;i++){
           checkList[i] = true;
         }
       }
@@ -31,6 +34,13 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
     dispatch({
       type:'listMessage/refresh',
       payload:{refresh}
+    });
+  }
+  function resultModal(){
+    checkModal = false;
+    dispatch({
+      type:'newMessage/checkModal',
+      payload:{checkModal}
     });
   }
   function toDetail(sub,create,rece,zcont,znum,ii){
@@ -72,7 +82,7 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
         function(resolve, reject) {
           setTimeout(function(){
             if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-              queryMessage(true);
+              queryMessage();
               showBtn = false;
               dispatch({
                 type:'listMessage/showBtn',
@@ -94,11 +104,27 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
                 type:'listMessage/showBtn',
                 payload:{showBtn}
               });
+              console.log('eee');
+              warningText = window.app.mAggregations.pages["0"].oController.msg;
+              dispatch({
+                type:'newMessage/warningText',
+                payload:{warningText}
+              });
+              checkModal = true;
+              dispatch({
+                type:'newMessage/checkModal',
+                payload:{checkModal}
+              });
               reject();
             }
          }, 250); 
         }
       );
+      promise.then(function(r){
+        console.log('then');
+      }).catch(function(r){
+        console.log('catch');
+      });
   }
 
   function mailFun(){
@@ -124,11 +150,32 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
+            console.log('eee');
+            mailModelShow = false;
+            dispatch({
+              type:'listMessage/mailModelShow',
+              payload:{mailModelShow}
+            });
+            warningText = window.app.mAggregations.pages["0"].oController.msg;
+            dispatch({
+              type:'newMessage/warningText',
+              payload:{warningText}
+            });
+            checkModal = true;
+            dispatch({
+              type:'newMessage/checkModal',
+              payload:{checkModal}
+            });
             reject();
           }
        }, 250); 
       }
     );
+    promise.then(function(r){
+      console.log('then');
+    }).catch(function(r){
+      console.log('catch');
+    });
   }
   function deleteCancel(){
     showBtn = false;
@@ -151,8 +198,8 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       payload:{refresh}
     });
   }
-  function queryMessage(){
-    window.app.mAggregations.pages["0"].oController.queryMessage(subject, startTime, endTime);
+  function queryMessage(num){
+    window.app.mAggregations.pages["0"].oController.queryMessage(subject, startTime, endTime,num);
     let promise = new Promise(
       function(resolve, reject) {
         setTimeout(function(){
@@ -168,6 +215,11 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
        }, 250); 
       }
     );
+    promise.then(function(r){
+      console.log('then');
+    }).catch(function(r){
+      console.log('catch');
+    });
   }
   function subjectValue(e){
     subject = e.target.value;
@@ -208,17 +260,23 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
             <Col className={st.ta_right+b+st.pd_5_0} span={2}>日期：</Col>
             <Col span={3}><DatePicker onChange={startValue} className={st.cl_red} placeholder='开始'/></Col>
             <Col span={3}><DatePicker onChange={endValue} className={st.cl_red} placeholder='结束'/></Col>
-            <Col onClick={queryMessage} span={27} className={st.pt_absolute+b+st.rt_30+b+st.tp_0}><Button type="primary">查询</Button></Col>
+            <Col onClick={queryMessage.bind(this,0)} span={27} className={st.pt_absolute+b+st.rt_30+b+st.tp_0}><Button type="primary">查询</Button></Col>
           </InputGroup>
         </Row>
         <Row className={st.bd_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_4}>
             <Col span={1} className={st.pd_l_5}><Checkbox onChange={checkAll}/></Col>
             <Col span={4} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>创建人</Col>
-            <Col span={16} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>主题</Col>
-            <Col span={3} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>时间</Col>
+            <Col span={14} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>主题</Col>
+            <Col span={5} className={st.bd_l_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_l_5}>时间</Col>
         </Row>
-        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_5+b+st.cl_blue3}>
-          上周（4）
+        <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2+b+st.pd_5+b+st.cl_blue3+b+st.ta_right}>
+         {
+           // 上周（4）
+         }
+          <Pagination showQuickJumper pageSize={20} defaultCurrent={1}
+           total={window.app ?
+            window.app.mAggregations.pages['0'].oModels.messageModel.oData.Inlinecount
+           :100} onChange={fenye} />
         </Row>
         {
           window.app && window.app.mAggregations.pages['0'].oModels.messageModel.oData.AnnounceTitleSet?
@@ -226,8 +284,12 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
             <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
               <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[i]} onChange={changeCheckBox.bind(this,i)}/></div></Col>
               <Col span={4}><div className={st.pd_10}>{r.Zcreater}</div></Col>
-              <Col span={16}><div className={st.pd_10}>{r.Zsubject}</div></Col>
-              <Col span={2}><div className={st.pd_10}>{r.Zcreatedate}</div></Col>
+              <Col span={14}><div className={st.pd_10}>{r.Zsubject}</div></Col>
+              <Col span={4}><div className={st.pd_10}>
+              {
+                r.Zcreatedate.substr(0,4)+'-'+r.Zcreatedate.substr(4,2)+'-'+r.Zcreatedate.substr(6,2)+' '+
+                r.Zcreatetime.substr(0,2)+':'+ r.Zcreatetime.substr(2,2)+':'+r.Zcreatetime.substr(4,2)
+              }</div></Col>
               <Col span={1}><div onClick={toDetail.bind(this,r.Zsubject,r.Zcreatedate,r.Zrecepter,r.Zcontent,r.Znumber,i)} className={st.ta_center+b+st.pd_10_0} ><Icon type='right'/></div></Col>
             </Row>
           )):''
@@ -244,6 +306,9 @@ function MessageContent({dispatch, showBtn, mailModelShow, checkList, refresh, s
       }
       {
         newSuccess?<MessageModal text={'操作成功'} okfun={saveSuccess} clfun={saveSuccess}/>:''
+      }
+      {
+        checkModal?<MessageModal text={warningText} okfun={resultModal} clfun={resultModal}/>:''
       }
     </div>
   );
@@ -265,6 +330,8 @@ function mapStateToProps(state) {
     content:state.detailMessage.content,
     number:state.detailMessage.number,
     idx:state.detailMessage.idx,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(MessageContent);

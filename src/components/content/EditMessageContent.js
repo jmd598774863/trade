@@ -12,35 +12,42 @@ const InputGroup = Input.Group;
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
 
-function EditMessageContent({dispatch, receiver, detailSubject, content,  newSuccess}) {
+function EditMessageContent({checkModal, warningText,dispatch, receiver, detailSubject, content,  newSuccess}) {
 
     function recipientsChange(proxy){
-        receiver = proxy.target.value;
-        dispatch({
-          type:'detailMessage/receiver',
-          payload:{receiver}
-        });
-      }
-      function themeChange(proxy){
-        detailSubject = proxy.target.value;
-        dispatch({
-          type:'detailMessage/detailSubject',
-          payload:{detailSubject}
-        });
-      }
-      function mainBodyChange(proxy){
-        content = proxy.target.value;
-        dispatch({
-          type:'detailMessage/content',
-          payload:{content}
-        });
-      }
+      receiver = proxy.target.value;
+      dispatch({
+        type:'detailMessage/receiver',
+        payload:{receiver}
+      });
+    }
+    function themeChange(proxy){
+      detailSubject = proxy.target.value;
+      dispatch({
+        type:'detailMessage/detailSubject',
+        payload:{detailSubject}
+      });
+    }
+    function mainBodyChange(proxy){
+      content = proxy.target.value;
+      dispatch({
+        type:'detailMessage/content',
+        payload:{content}
+      });
+    }
     function saveSuccess(){
         newSuccess = false;
         dispatch({
         type:'detailMessage/newSuccess',
         payload:{newSuccess}
         });
+    }
+    function resultModal(){
+      checkModal = false;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
     }
   return (
     <div className={styles.normal}>
@@ -65,6 +72,9 @@ function EditMessageContent({dispatch, receiver, detailSubject, content,  newSuc
       {
         newSuccess?<MessageModal text={'操作成功'} okfun={saveSuccess} clfun={saveSuccess}/>:''
       }
+      {
+        checkModal?<MessageModal text={warningText} okfun={resultModal} clfun={resultModal}/>:''
+      }
     </div>
   );
 }
@@ -73,6 +83,8 @@ function mapStateToProps(state) {
     detailSubject: state.detailMessage.detailSubject,
     receiver:state.detailMessage.receiver,
     content:state.detailMessage.content,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(EditMessageContent);

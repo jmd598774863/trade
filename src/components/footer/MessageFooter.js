@@ -9,12 +9,24 @@ import st from '../../css/simple.css';
 const b = ' ';
 const { Footer } = Layout;
 
-function MessageFooter({dispatch, showBtn, mailModelShow}) {
+function MessageFooter({checkModal, warningText,dispatch, showBtn, mailModelShow,checkList}) {
   function newMessage(){
     dispatch(routerRedux.push('/newMessage'));
   }
   function showMailModal(){
-    
+    if(checkList.length==0){
+      warningText = '请至少选择一项';
+      dispatch({
+        type:'newMessage/warningText',
+        payload:{warningText}
+      });
+      checkModal = true;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
+      return;
+    }
     mailModelShow = true;
     dispatch({
       type:'listMessage/mailModelShow',
@@ -22,15 +34,24 @@ function MessageFooter({dispatch, showBtn, mailModelShow}) {
     });
   }
   function showDeleteModal(){
+    if(checkList.length==0){
+      warningText = '请至少选择一项';
+      dispatch({
+        type:'newMessage/warningText',
+        payload:{warningText}
+      });
+      checkModal = true;
+      dispatch({
+        type:'newMessage/checkModal',
+        payload:{checkModal}
+      });
+      return;
+    }
     showBtn = true;
     dispatch({
       type:'listMessage/showBtn',
       payload:{showBtn}
     });
-  }
-
-  function mailMessage(){
-    window.app.mAggregations.pages["0"].oController.mailMessage();
   }
   
   return (
@@ -48,6 +69,9 @@ function mapStateToProps(state) {
   return {
     showBtn : state.listMessage.showBtn,
     mailModelShow : state.listMessage.mailModelShow,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
+    checkList: state.listMessage.checkList,
   };
 }
 export default connect(mapStateToProps)(MessageFooter);

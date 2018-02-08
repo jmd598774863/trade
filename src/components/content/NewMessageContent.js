@@ -12,7 +12,7 @@ const InputGroup = Input.Group;
  //屏幕宽高
 const sheight = document.documentElement.clientHeight;
 const swidth = document.documentElement.clientWidth;
-function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) {
+function NewMessageContent({checkModal, warningText, dispatch, recipients, theme, mainBody, newSuccess}) {
   function recipientsChange(proxy){
     recipients = proxy.target.value;
     dispatch({
@@ -42,6 +42,13 @@ function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) 
       payload:{newSuccess}
     });
   }
+  function resultModal(){
+    checkModal = false;
+    dispatch({
+      type:'newMessage/checkModal',
+      payload:{checkModal}
+    });
+  }
   return (
     <div className={styles.normal}>
       <div className={st.hg_64}/>
@@ -68,6 +75,9 @@ function NewMessageContent({dispatch, recipients, theme, mainBody, newSuccess}) 
       {
         newSuccess?<MessageModal text={'操作成功'} okfun={saveSuccess} clfun={saveSuccess}/>:''
       }
+      {
+        checkModal?<MessageModal text={warningText} okfun={resultModal} clfun={resultModal}/>:''
+      }
     </div>
   );
 }
@@ -77,6 +87,8 @@ function mapStateToProps(state) {
     theme : state.newMessage.theme,
     mainBody : state.newMessage.mainBody,
     newSuccess : state.newMessage.newSuccess,
+    checkModal:state.newMessage.checkModal,
+    warningText:state.newMessage.warningText,
   };
 }
 export default connect(mapStateToProps)(NewMessageContent);
