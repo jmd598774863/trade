@@ -300,7 +300,7 @@ function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mai
           window.app.mAggregations.pages['0'].oModels.messageModel.oData.AnnounceTitleSet.results.map((r,i)=>(
             <Row className={st.bd_b_s+b+st.bd_w_1+b+st.bd_c_grey2}>
               <Col span={1}><div className={st.pd_10}><Checkbox checked={checkList[i]} onChange={changeCheckBox.bind(this,i)}/></div></Col>
-              <Col span={4}><div className={st.pd_10}>{r.Zcreater}</div></Col>
+              <Col span={4}><div className={st.pd_10}>{window.app.mAggregations.pages["0"].oController.userName}</div></Col>
               <Col span={14}><div className={st.pd_10}>{r.Zsubject}</div></Col>
               <Col span={4}><div className={st.pd_10}>
               {

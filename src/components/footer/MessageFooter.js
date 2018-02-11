@@ -14,7 +14,13 @@ function MessageFooter({checkModal, warningText,dispatch, showBtn, mailModelShow
     dispatch(routerRedux.push('/newMessage'));
   }
   function showMailModal(){
-    if(checkList.length==0){
+    var b = false;
+    for(var i=0;i<checkList.length;i++){
+      if(checkList[i] == true){
+        b = true;
+      }
+    }
+    if(b == false){
       warningText = '请至少选择一项';
       dispatch({
         type:'newMessage/warningText',
@@ -34,7 +40,13 @@ function MessageFooter({checkModal, warningText,dispatch, showBtn, mailModelShow
     });
   }
   function showDeleteModal(){
-    if(checkList.length==0){
+    var b = false;
+    for(var i=0;i<checkList.length;i++){
+      if(checkList[i] == true){
+        b = true;
+      }
+    }
+    if(b == false){
       warningText = '请至少选择一项';
       dispatch({
         type:'newMessage/warningText',
