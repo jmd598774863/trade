@@ -29,7 +29,6 @@ function NewMessageContent({checkModal, warningText, dispatch, recipients, theme
   }
   function mainBodyChange(proxy){
     mainBody = proxy.target.value.replace(/\n/g,"\r\n");//.replace(/\n/g,"<br/>").replace(/\s/g,"&nbsp;")
-    console.log(mainBody);
     dispatch({
       type:'newMessage/mainBody',
       payload:{mainBody}

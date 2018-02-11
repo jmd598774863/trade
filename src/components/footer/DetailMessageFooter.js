@@ -22,7 +22,6 @@ function DetailMessageFooter({dispatch,idx,sendMessage,warningText,checkModal}) 
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('ese');
             warningText = window.app.mAggregations.pages["0"].oController.msg;
             dispatch({
               type:'newMessage/warningText',
@@ -39,9 +38,7 @@ function DetailMessageFooter({dispatch,idx,sendMessage,warningText,checkModal}) 
       }
     );
     promise.then(function(r){
-      console.log('then');
     }).catch(function(r){
-      console.log('catch');
     });
   }
   function toEdit(){

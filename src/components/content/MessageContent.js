@@ -114,7 +114,6 @@ function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mai
                 type:'listMessage/showBtn',
                 payload:{showBtn}
               });
-              console.log('eee');
               warningText = window.app.mAggregations.pages["0"].oController.msg;
               dispatch({
                 type:'newMessage/warningText',
@@ -136,9 +135,7 @@ function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mai
         }
       );
       promise.then(function(r){
-        console.log('then');
       }).catch(function(r){
-        console.log('catch');
       });
   }
 
@@ -170,7 +167,6 @@ function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mai
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('eee');
             mailModelShow = false;
             dispatch({
               type:'listMessage/mailModelShow',
@@ -197,9 +193,7 @@ function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mai
       }
     );
     promise.then(function(r){
-      console.log('then');
     }).catch(function(r){
-      console.log('catch');
     });
   }
   function deleteCancel(){
@@ -241,9 +235,7 @@ function MessageContent({allCheck,checkModal, warningText,dispatch, showBtn, mai
       }
     );
     promise.then(function(r){
-      console.log('then');
     }).catch(function(r){
-      console.log('catch');
     });
   }
   function subjectValue(e){

@@ -23,9 +23,7 @@ function EditMessageFooter({checkModal, warningText,dispatch, receiver, detailSu
       }
     );
     promise.then(function(r){
-      console.log('then');
     }).catch(function(r){
-      console.log('catch');
     });
   }
   function editSave(){
@@ -118,7 +116,6 @@ function EditMessageFooter({checkModal, warningText,dispatch, receiver, detailSu
             });
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('eee');
             warningText = window.app.mAggregations.pages["0"].oController.msg;
             dispatch({
               type:'newMessage/warningText',
@@ -135,9 +132,7 @@ function EditMessageFooter({checkModal, warningText,dispatch, receiver, detailSu
       }
     );
     promise.then(function(r){
-      console.log('then');
     }).catch(function(r){
-      console.log('catch');
     });
   }
 

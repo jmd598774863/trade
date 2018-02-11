@@ -38,7 +38,6 @@ function NewMessageFooter({checkModal, warningText, dispatch, recipients, theme,
     }else{
       //多个邮箱
       const array = recipients.split(';');
-      console.log(array.length-1);
       for(var i=0;i<array.length;i++){
         if(!regex.test(array[i])){
          b = false;
@@ -49,7 +48,6 @@ function NewMessageFooter({checkModal, warningText, dispatch, recipients, theme,
       }
     }
     if(b == false){
-      console.log('bin');
       warningText = '收件人邮箱格式不正确';
       dispatch({
         type:'newMessage/warningText',
@@ -93,7 +91,6 @@ function NewMessageFooter({checkModal, warningText, dispatch, recipients, theme,
       function(resolve, reject) {
         setTimeout(function(){
           if(window.app.mAggregations.pages["0"].oController.SorE === 'S'){
-            console.log('sss');
             window.app.mAggregations.pages["0"].oController.queryMessage(subject, startTime, endTime);
             let promise = new Promise(
               function(resolve, reject) {
@@ -117,7 +114,6 @@ function NewMessageFooter({checkModal, warningText, dispatch, recipients, theme,
             );
             resolve(); 
           }else if(window.app.mAggregations.pages["0"].oController.SorE === 'E'){
-            console.log('eee');
             warningText = window.app.mAggregations.pages["0"].oController.msg;
             dispatch({
               type:'newMessage/warningText',
@@ -134,9 +130,7 @@ function NewMessageFooter({checkModal, warningText, dispatch, recipients, theme,
       },
     );
     promise.then(function(r){
-      console.log('then');
     }).catch(function(r){
-      console.log('catch');
     });
   }
 
